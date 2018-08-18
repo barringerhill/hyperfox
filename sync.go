@@ -21,19 +21,6 @@ type SyncUser2 struct {
 	Date    int
 }
 
-// SyncLoginInfo2 describes a login information
-type SyncLoginInfo2 struct {
-	Id       int64
-	IP       string `xorm:"index"`
-	UserId   int64
-	AddedCol int
-	// timestamp should be updated by database, so only allow get from db
-	TimeStamp string
-	// assume
-	Nonuse int    `xorm:"unique"`
-	Newa   string `xorm:"index"`
-}
-
 func sync(engine *xorm.Engine) error {
 	return engine.Sync(&SyncLoginInfo2{}, &SyncUser2{})
 }
@@ -45,21 +32,14 @@ func sqliteEngine() (*xorm.Engine, error) {
 	return xorm.NewEngine("sqlite3", f)
 }
 
-func mysqlEngine() (*xorm.Engine, error) {
-	return xorm.NewEngine("mysql", "root:@/test?charset=utf8")
-}
-
 func postgresEngine() (*xorm.Engine, error) {
 	return xorm.NewEngine("postgres", "dbname=xorm_test sslmode=disable")
 }
 
 type engineFunc func() (*xorm.Engine, error)
 
-func main() {
-	//engines := []engineFunc{sqliteEngine, mysqlEngine, postgresEngine}
-	//engines := []engineFunc{sqliteEngine}
-	//engines := []engineFunc{mysqlEngine}
-	//engines := []engineFunc{postgresEngine}
+lfunc main() {
+	
 	engines := []engineFunc{postgresEngine, sqliteEngine}
 	for _, enginefunc := range engines {
 		Orm, err := enginefunc()
