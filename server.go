@@ -9,7 +9,7 @@ func main() {
 	app := iris.New();
 	
 	app.Get("/", func (ctx context.Context) {
-		ctx.JSON(iris.Map{"result": "Hello, world!"});
+	 	ctx.JSON(iris.Map{"result": "Hello, world!"});
 	})
 	
 	app.Run(iris.Addr(":8080"));
