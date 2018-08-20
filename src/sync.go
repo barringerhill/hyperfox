@@ -1,3 +1,6 @@
+// 
+// Sync insert.
+//
 
 package main
 
@@ -24,6 +27,18 @@ func postgresEngine() (*xorm.Engine, error) {
 type engineFunc func() (*xorm.Engine, error)
 
 func main() {
+	block := &Block{
+		Height: 1,
+		Time: "the second",
+		Txs_n: 2,
+		Inner_txs_n: 3,
+		Txs: "bowie",
+	}
+
+	insert(block);
+}
+
+func insert(block Block) {
 	
 	engines := []engineFunc{postgresEngine, sqliteEngine}
 	for _, enginefunc := range engines {
@@ -45,15 +60,7 @@ func main() {
 		// _, err = Orm.Where("id > 0").Delete(&Block{})
 		// if err != nil {
 		// 	fmt.Println(err)
-		// }
-
-		block := &Block{
-			Height: 0,
-			Time: "now",
-			Txs_n: 1,
-			Inner_txs_n: 2,
-			Txs: "bowie",
-		}
+		// }		
 		
 		_, err = Orm.Insert(block)
 		if err != nil {

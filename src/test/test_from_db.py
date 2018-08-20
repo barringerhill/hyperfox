@@ -16,6 +16,6 @@ class Block(Model):
 db.connect();
 db.create_tables([Block]);
 
-print(Block.select().count())
+print("total query: [", Block.select().count(), "]")
 for b in Block.select():
-    print(b.time)
+    print(b.id, "time:", b.time)
