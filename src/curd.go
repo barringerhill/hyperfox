@@ -26,16 +26,14 @@ func postgresEngine() (*xorm.Engine, error) {
 
 type engineFunc func() (*xorm.Engine, error)
 
-func main() {
-	block := &Block{
-		Height: 1,
-		Time: "the second",
-		Txs_n: 2,
-		Inner_txs_n: 3,
-		Txs: "bowie",
+func read() {
+	engine,err := sqliteEngine();
+	var blocks []Block
+	err = engine.Find(&blocks);
+	if err != nil {
+		fmt.Printf("{}", err);
 	}
-
-	insert(block);
+	fmt.Printf("{}", blocks)
 }
 
 func insert(block Block) {
@@ -79,3 +77,4 @@ func insert(block Block) {
 		}
 	}
 }
+
