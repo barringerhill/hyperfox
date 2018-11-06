@@ -39,16 +39,18 @@ func (a *Allblue) read(page int) []string {
 	return res;
 }
 
-func (a *Allblue) search(ctx string) []string {
+func (a *Allblue) search(ctx string, page int) []string {
 	db, err := gorm.Open("postgres", "dbname=allblue sslmode=disable");
 	assert(err); defer db.Close();
 	
 	var tx []Tx;
-	db.Raw("SELECT * FROM txes where data ~* '" + ctx + "'").Scan(&tx);
+	db.Raw("SELECT * FROM txes where data ~* '" + ctx + "' " + strconv.Itoa(page * 10) + " limit 10").Scan(&tx);
 
 	var res []string
 	for _, i := range(tx) {
-		res = append(res, i.to_json());
+		res = append(res, i.Hash);
+		res = append(res, i.Data);
+		res = append(res, strconv.FormatUint(i.Number, 10))
 	}
 	
 	return res
