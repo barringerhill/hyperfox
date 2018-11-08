@@ -15,7 +15,7 @@ func server() {
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
-	})
+	});
 	
 	// app
 	app := iris.New();
@@ -42,7 +42,7 @@ func server() {
 			text := ctx.URLParam("text");
 			value := ctx.URLParam("page");
 			if value == "" { value = "0" }
-			
+
 			page, err := strconv.Atoi(value);
 			assert(err);
 
